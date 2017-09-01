@@ -109,23 +109,24 @@ function drawPixelColor(canvasName, x, y, red, green, blue) {
     drawPixel(canvasId, Pixeldata);
 }
 
-function drawRdmPixelTToCanvas(canvas, x, y)
+function drawPixelToCanvasRdmColor(canvas, x, y, transp)
 {
     Pixeldata.red = parseInt(Math.random()*255);
     Pixeldata.green = parseInt(Math.random()*255);
     Pixeldata.blue = parseInt(Math.random()*255);
+    Pixeldata.transp = transp;
     Pixeldata.posX = x;
     Pixeldata.posY = y;
     var canvasId = canvas.substring(1);
     drawPixelT(canvasId, Pixeldata);
 }
 
-function drawPixelToCanvas(canvasName, x, y, red, green ,blue)
+function drawPixelToCanvas(canvasName, x, y, red, green ,blue,transp)
 {
     Pixeldata.red = red;
     Pixeldata.green = green;
     Pixeldata.blue = blue;
-    Pixeldata.transp = 1;
+    Pixeldata.transp = transp;
     Pixeldata.posX = x;
     Pixeldata.posY = y;
     var canvasId = canvasName.substring(1);
