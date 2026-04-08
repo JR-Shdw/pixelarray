@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pixelarray — micro pixel engine</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #c8c8d0;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* ── Full screen carousel ──────────────────── */
+    .stage {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .stage canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Overlay text */
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 16px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      pointer-events: none;
+      z-index: 2;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, transparent 100%);
+      padding-bottom: 30px;
+    }
+
+    .overlay-left h1 {
+      font-size: 1.6em;
+      letter-spacing: 5px;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    .overlay-left .demo-name {
+      font-size: 1.1em;
+      color: #7eaaff;
+      letter-spacing: 3px;
+      margin-top: 4px;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+    }
+
+    .overlay-left .demo-desc {
+      font-size: 0.78em;
+      color: #aaa;
+      margin-top: 4px;
+      max-width: 500px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    }
+
+    .overlay-right {
+      text-align: right;
+    }
+
+    .overlay-right .count {
+      font-size: 0.8em;
+      color: #999;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    }
+
+    .overlay-right .pos {
+      font-size: 0.75em;
+      color: #777;
+      margin-top: 4px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    }
+
+    /* Navigation arrows */
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(120, 140, 200, 0.15);
+      color: rgba(126, 170, 255, 0.6);
+      font-size: 2.2em;
+      width: 52px;
+      height: 90px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      transition: all 0.2s;
+      border-radius: 4px;
+      user-select: none;
+    }
+
+    .nav-btn:hover {
+      background: rgba(20, 20, 50, 0.8);
+      color: #fff;
+      border-color: rgba(126, 170, 255, 0.4);
+    }
+
+    .nav-prev { left: 12px; }
+    .nav-next { right: 12px; }
+
+    /* Dots at bottom */
+    .dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 3;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dot.active {
+      background: #7eaaff;
+      border-color: #7eaaff;
+      box-shadow: 0 0 8px rgba(126, 170, 255, 0.4);
+    }
+
+    .dot:hover { background: rgba(255, 255, 255, 0.3); }
+
+    /* Keyboard hint */
+    .hint {
+      position: absolute;
+      bottom: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65em;
+      color: #2a2a3a;
+      letter-spacing: 2px;
+      z-index: 3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stage">
+    <canvas id="c-demo"></canvas>
+
+    <div class="overlay">
+      <div class="overlay-left">
+        <h1>PIXELARRAY</h1>
+        <div class="demo-name" id="demo-name">BLACK HOLE</div>
+        <div class="demo-desc" id="demo-desc">Accretion disk, photon ring, relativistic jets</div>
+      </div>
+      <div class="overlay-right">
+        <div class="count" id="demo-count">900 particles</div>
+        <div class="pos" id="demo-pos">1 / 9</div>
+      </div>
+    </div>
+
+    <button class="nav-btn nav-prev" id="btn-prev">&larr;</button>
+    <button class="nav-btn nav-next" id="btn-next">&rarr;</button>
+
+    <div class="hint">arrows &bull; click dots</div>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <script type="module">
+    import { blackhole } from './blackhole.js';
+    import { solar } from './solar.js';
+    import { matrix } from './matrix.js';
+    import { starfield } from './starfield.js';
+    import { fire } from './fire.js';
+    import { water } from './water.js';
+    import { smoke } from './smoke.js';
+    import { dust } from './dust.js';
+    import { snow } from './snow.js';
+    import { gameoflife } from './gameoflife.js';
+
+    const demos = [
+      { name: 'BLACK HOLE', fn: blackhole,
+        count: '1200 particles + 300 stars',
+        desc: 'Accretion disk, photon ring, Kepler orbits, relativistic jets, thermal palette' },
+      { name: 'SOLAR SYSTEM', fn: solar,
+        count: '~1500 objects',
+        desc: 'Textured planets, corona, sunspots, flares, CME, asteroid belt, Saturn rings' },
+      { name: 'MATRIX', fn: matrix,
+        count: '~300 columns, grid 3px',
+        desc: 'Variable speed rain, long trails, brightness buffer fade-to-black' },
+      { name: 'STARFIELD', fn: starfield,
+        count: '500 particles',
+        desc: '3D perspective, depth motion trails, size + brightness scaling' },
+      { name: 'FIRE', fn: fire,
+        count: '~10k heat cells + 200 embers',
+        desc: 'Heat propagation, 256-color palette, wind sway, pixel-level sparks' },
+      { name: 'WATER', fn: water,
+        count: '~6k ripple cells',
+        desc: 'Dual-buffer wave propagation, caustics, specular highlights, foam' },
+      { name: 'SMOKE', fn: smoke,
+        count: '600 particles',
+        desc: 'Rising volutes from fire, thermal acceleration, wind drift, curl tendrils' },
+      { name: 'DUST', fn: dust,
+        count: '1000 particles',
+        desc: 'Thick billowing plume, opaque cloud buildup, wide expanding puffs' },
+      { name: 'SNOW', fn: snow,
+        count: '400 flakes + ground',
+        desc: 'Wind physics, sine wobble, ground accumulation, terrain smoothing' },
+      { name: 'GAME OF LIFE', fn: gameoflife,
+        count: '~16k cells',
+        desc: 'Conway automaton, typed arrays, toroidal wrap, age color, auto-reseed' },
+    ];
+
+    let current = -1;
+    let activePx = null;
+    const canvas = document.getElementById('c-demo');
+    const nameEl = document.getElementById('demo-name');
+    const descEl = document.getElementById('demo-desc');
+    const countEl = document.getElementById('demo-count');
+    const posEl = document.getElementById('demo-pos');
+    const dotsEl = document.getElementById('dots');
+
+    // Build dots
+    demos.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.addEventListener('click', () => loadDemo(i));
+      dotsEl.appendChild(dot);
+    });
+
+    function loadDemo(idx) {
+      if (activePx) { activePx.stop(); activePx = null; }
+
+      current = ((idx % demos.length) + demos.length) % demos.length;
+      const demo = demos[current];
+
+      // Resize canvas to window
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      nameEl.textContent = demo.name;
+      descEl.textContent = demo.desc;
+      countEl.textContent = demo.count;
+      posEl.textContent = `${current + 1} / ${demos.length}`;
+
+      dotsEl.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+
+      activePx = demo.fn(canvas);
+    }
+
+    // Controls
+    document.getElementById('btn-prev').addEventListener('click', () => loadDemo(current - 1));
+    document.getElementById('btn-next').addEventListener('click', () => loadDemo(current + 1));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') loadDemo(current - 1);
+      if (e.key === 'ArrowRight') loadDemo(current + 1);
+    });
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+      if (activePx) {
+        activePx.stop();
+        activePx = null;
+      }
+      loadDemo(current);
+    });
+
+    // Start
+    loadDemo(0);
+  </script>
+
+</body>
+</html>
