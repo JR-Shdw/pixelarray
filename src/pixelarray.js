@@ -9,7 +9,7 @@
 
 'use strict';
 
-export class PixelArray {
+class PixelArray {
   /**
    * @param {HTMLCanvasElement|string} canvas — element or CSS selector
    * @param {object} [opts]
@@ -99,3 +99,11 @@ export class PixelArray {
     this.h = this.el.height;
   }
 }
+
+// UMD: works as <script src> (global) and as ES module (import)
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { PixelArray };
+} else if (typeof window !== 'undefined') {
+  window.PixelArray = PixelArray;
+}
+export { PixelArray };
