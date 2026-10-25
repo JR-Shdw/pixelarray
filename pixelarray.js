@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2017-2026 shdw
 /***** bibliotheque pour recuperer la taille d'une DIV de ID pixelArray *****/
 /*****Structure *****/
 

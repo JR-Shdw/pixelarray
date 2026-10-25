@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Fire — narrow concentrated flame with lots of floating embers
  * Heat buffer at pixelSize=4 (light) + embers at pixel-level (smooth)

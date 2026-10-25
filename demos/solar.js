@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Solar system — 100% pixelarray API (dot + rect + fill only)
  * Planet colors pre-calculated in arrays, drawn with px.dot() each frame

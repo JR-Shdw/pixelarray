@@ -76,6 +76,14 @@ and so on) with French comments. It is kept because the root `index.html` and
 
 ## License
 
-Unresolved, and worth fixing before reuse. The `LICENSE` file is GPL-3.0,
-while the header of `src/pixelarray.js` declares `@license MIT`. The two
-contradict each other and no single intent is recorded anywhere.
+MIT. See `LICENSE`. The library and every demo carries an
+`SPDX-License-Identifier` header, so the licence of each file is readable
+without inferring anything.
+
+One exception, stated in `LICENSE` and in the files themselves:
+`demos/rhorizon-blackhole.js` and `demos/rhorizon-sidepanel.js` are brand
+assets of the separate Resurgamus Horizon project and stay AGPL-3.0-or-later.
+They are standalone demos -- `src/pixelarray.js` and the other demos neither
+include nor depend on them -- so deleting those two files, plus the
+`rhorizon-blackhole.html` and `rhorizon-intro.html` pages that load them,
+leaves an MIT-only tree.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 //pixelarray.js required
 //l'objet tableau du jeu de la vie
 

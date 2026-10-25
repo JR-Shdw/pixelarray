@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Starfield — 3D perspective stars rushing toward camera
  */

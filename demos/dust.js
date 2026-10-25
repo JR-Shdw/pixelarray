@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Dust — thick billowing plume, opaque cloud buildup
  * Rectangular puffs that overlap into a dense mass

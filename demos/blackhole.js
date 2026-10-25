@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Black hole — accretion disk, photon ring, relativistic jets
  * 100% pixelarray API — every pixel is a px.dot()

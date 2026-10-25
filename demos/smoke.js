@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Smoke — wispy rising volutes escaping from fire
  * Starts slow near flames, accelerates upward, curls and dissipates

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Game of Life — Conway's cellular automaton, optimized
  * No more setInterval, no globals, typed arrays

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Snow — falling flakes with wind and ground accumulation
  */

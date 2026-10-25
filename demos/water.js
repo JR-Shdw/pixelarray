@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Water — ripple propagation + caustic light + foam
  * pixelSize=2 for ~22k cells (smooth enough, fast enough)

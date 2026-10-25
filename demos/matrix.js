@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Matrix rain — grid-based for performance, proper fade to black
  */

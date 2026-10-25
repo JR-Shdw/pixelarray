@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * pixelarray — micro pixel drawing library
  * Zero dependencies. Pure canvas 2D. fillRect(x, y, size, size).
