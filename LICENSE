@@ -19,18 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
---------------------------------------------------------------------------------
-Exception: Resurgamus Horizon brand skins
---------------------------------------------------------------------------------
-
-Two demo files are brand assets of the separate Resurgamus Horizon project and
-are NOT covered by the MIT license above. They remain licensed under the GNU
-Affero General Public License v3.0 or later, as stated in their own headers:
-
-    demos/rhorizon-blackhole.js
-    demos/rhorizon-sidepanel.js
-
-They are independent demo files: the library in src/ and the other demos do not
-include or depend on them. Delete both (and rhorizon-blackhole.html /
-rhorizon-intro.html, which load them) for an MIT-only tree.

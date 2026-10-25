@@ -80,7 +80,7 @@ MIT. See `LICENSE`. The library and every demo carries an
 `SPDX-License-Identifier` header, so the licence of each file is readable
 without inferring anything.
 
-One exception, stated in `LICENSE` and in the files themselves:
+One exception, stated in [`LICENSE-EXCEPTIONS.md`](LICENSE-EXCEPTIONS.md) and in the files themselves:
 `demos/rhorizon-blackhole.js` and `demos/rhorizon-sidepanel.js` are brand
 assets of the separate Resurgamus Horizon project and stay AGPL-3.0-or-later.
 They are standalone demos -- `src/pixelarray.js` and the other demos neither
