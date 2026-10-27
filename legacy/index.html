@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of Life - PixelArray</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #1a1a2e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: monospace;
+            color: #e0e0e0;
+        }
+        h1 {
+            margin-bottom: 10px;
+            font-size: 1.4em;
+            color: #00d4ff;
+            letter-spacing: 2px;
+        }
+        #info {
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #888;
+        }
+        canvas {
+            border: 1px solid #00d4ff;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conway's Game of Life</h1>
+    <p id="info">PixelArray Engine</p>
+    <canvas id="gameOfLife" width="800" height="600"></canvas>
+    <script src="pixelarray.js"></script>
+    <script src="gol.js"></script>
+</body>
+</html>

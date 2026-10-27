@@ -1,13 +1,29 @@
 
-Demo at https://jr-shdw.github.io/pixelarray/demos/
-
 # pixelarray
 
 A micro canvas-2D drawing library with no dependencies, plus a showcase of
-twelve animated demos built on it.
+ten animated demos built on it.
+
+Live demo: https://jr-shdw.github.io/pixelarray/
 
 Everything draws through `fillRect(x, y, size, size)`. There is no WebGL, no
 shader, no build step and no package to install -- one class, about 110 lines.
+
+## Demos
+
+Open the [live page](https://jr-shdw.github.io/pixelarray/) and use the arrow
+buttons, the arrow keys or the dots: black hole, solar system, matrix rain,
+starfield, fire, water, smoke, dust, snow and game of life. The heaviest run
+1200 to 1500 particles.
+
+To run them locally, serve the repository and open `index.html`:
+
+```sh
+python3 -m http.server 8000
+```
+
+The demos are ES modules, so they need to be served over HTTP: opened as
+`file://` the browser blocks the imports and the page stays black.
 
 ## Usage
 
@@ -50,43 +66,25 @@ or a CSS selector. Options are `pixelSize` (default 1) and `autoClear`
 The `fade()` helper is what most of the demos rely on for trails: wash the
 frame with a low-alpha black instead of clearing it.
 
-## Demos
-
-Open `demos/index.html` and use the arrow buttons. Ten are wired into the
-carousel: black hole, solar system, matrix rain, starfield, fire, water,
-smoke, dust, snow and game of life. The heaviest run 1200 to 1500 particles.
-
-Two more are not in the carousel and are used as page backgrounds:
-`demos/rhorizon-blackhole.js` and `demos/rhorizon-sidepanel.js`, shown by
-`rhorizon-blackhole.html` and `rhorizon-intro.html`.
-
-Demos are ES modules importing `../src/pixelarray.js`, so they need to be
-served over HTTP rather than opened as `file://`:
-
-```sh
-python3 -m http.server 8000
-```
-
 ## Repository layout
 
-`src/pixelarray.js` is the current library (v2, the `PixelArray` class) and
-is what every demo imports.
+```
+index.html           the demo carousel
+src/pixelarray.js    the library
+demos/<name>.js      one demo per file
+legacy/              the original 2017 version, kept for history
+```
 
-The `pixelarray.js` at the repository root is the original 2017 version: a
-flat set of global functions (`drawPixel`, `drawRandom`, `drawPixelToCanvas`
-and so on) with French comments. It is kept because the root `index.html` and
-`gol.js` still use it. New code should use `src/`.
+Every demo is self-contained: it imports `../src/pixelarray.js` and exports a
+single function taking a canvas element. Copying one is the shortest way to
+start something new.
+
+`legacy/` holds the 2017 original, a flat set of global functions with French
+comments, and the game of life page built on it. It is a rewrite rather than
+a compatible ancestor: nothing there maps onto the current API, and nothing
+outside that folder references it. See `legacy/README.md`.
 
 ## License
 
-MIT. See `LICENSE`. The library and every demo carries an
-`SPDX-License-Identifier` header, so the licence of each file is readable
-without inferring anything.
-
-One exception, stated in [`LICENSE-EXCEPTIONS.md`](LICENSE-EXCEPTIONS.md) and in the files themselves:
-`demos/rhorizon-blackhole.js` and `demos/rhorizon-sidepanel.js` are brand
-assets of the separate Resurgamus Horizon project and stay AGPL-3.0-or-later.
-They are standalone demos -- `src/pixelarray.js` and the other demos neither
-include nor depend on them -- so deleting those two files, plus the
-`rhorizon-blackhole.html` and `rhorizon-intro.html` pages that load them,
-leaves an MIT-only tree.
+MIT. See `LICENSE`. Every file carries an `SPDX-License-Identifier` header,
+so the licence of each one is readable without inferring anything.
