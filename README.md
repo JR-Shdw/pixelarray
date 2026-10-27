@@ -1,3 +1,6 @@
+
+Demo at https://jr-shdw.github.io/pixelarray/demos/
+
 # pixelarray
 
 A micro canvas-2D drawing library with no dependencies, plus a showcase of
